@@ -1,8 +1,22 @@
 <% if(env === 'production') { %>
   <script type="text/javascript" src="js/app.min.js"></script>
 <% } else { %>
+  <script type="text/javascript" src="models/complaint.js"></script>
+  <script type="text/javascript" src="collections/complaints.js"></script>
+  <script type="text/javascript" src="views/point.js"></script>
+  <script type="text/javascript" src="views/control.js"></script>
   <script type="text/javascript" src="app.js"></script>
 <% } %>
+<script type="text/template" id="control-template">
+  <div class="controls">
+    <form>
+      <select>
+        <option>White</option>
+        <option>Black</option>
+      </selection>
+    </form>
+  </div>
+</script>
 <script type="text/template" id="tooltip-template">
   <table>
     <tr>
@@ -33,7 +47,7 @@
       <th>Status:</th>
       <td>{{ status }}</td>
     </tr>
-  </dl>
+  </table>
 </script>
 <script type="text/javascript">
   $(document).ready(function () {
@@ -55,30 +69,25 @@
         ]
       }
     };
+    app.dispatcher = _.clone(Backbone.Events);
+    app.control = new app.Control({
+      el: '#controls'
+    });
+
+    //app.control.render();
 
     Tabletop.init({
       key: '0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc',
       callback: function(data, tabletop) { 
         var i,
-            dataLength = data.length,
             template = _.template($('#tooltip-template').html());
-   
-         // Kick off map
+          
+        app.complaints = new app.Complaints(data);
         app.initMap(function() {
-          for (i=0; i<dataLength; i++) {
-            L.marker([data[i].latitude, data[i].longitude])
-              .addTo(app.map)
-              .bindPopup(template({
-                type: data[i].type,
-                race: data[i].race,
-                sex: data[i].sex,
-                age: data[i].age,
-                date: data[i].date,
-                unit: data[i].unit,
-                action: data[i].action,
-                status: data[i].status
-              })).openPopup();
-          }
+          app.complaints.each(function (complaint) {
+            var point = new app.Point({model: complaint});
+            point.render();
+          });
         });         
       },
       simpleSheet: true 
