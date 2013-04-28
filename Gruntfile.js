@@ -68,8 +68,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-s3');
 
   grunt.registerTask('default', ''); // Intentionally left blank in the interest of being explicit
-
   grunt.registerTask('build', ['jshint', 'uglify', 'sass', 'shell']);
   grunt.registerTask('deploy', ['s3']);
-
 };
