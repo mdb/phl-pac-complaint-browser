@@ -21,14 +21,14 @@ app.use(express.static(__dirname + '/js'));
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'App Title | AxisPhilly',
+    title: 'Philadelphia Police Advisory Commision Complaints',
     env: app.settings.env
   });
 });
 
 app.get('/embed', function(req, res){
   res.render('embed', {
-    title: 'App Title | AxisPhilly',
+    title: 'Philadelphia Police Advisory Commision Complaints',
     env: app.settings.env
   });
 });
