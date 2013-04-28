@@ -51,10 +51,12 @@
 </script>
 <script type="text/javascript">
   $(document).ready(function () {
+    // use moustache syntax with underscore templates
      _.templateSettings = {
       interpolate : /\{\{(.+?)\}\}/g
     };
 
+    // set up the map configuration
     app.opts = {
       mapContainer: 'map',
       tileURL: 'http://api.tiles.mapbox.com/v3/mdb.map-iis6te5b.jsonp',
@@ -69,6 +71,7 @@
         ]
       }
     };
+
     app.dispatcher = _.clone(Backbone.Events);
     app.control = new app.Control({
       el: '#controls'
