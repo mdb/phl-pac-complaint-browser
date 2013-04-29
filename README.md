@@ -2,13 +2,13 @@
 
 A map of the 2009 - 2012 complaints logged by the Philadelphia Police Advisory Commission.
 
-pac-complaint-browser is built on AxisPhilly's [app-template](http://github.com/axisphilly/app-template) was haphazardly hacked together in a few hours as an entry in Philadelphia's 2013 Barcamp News Innovation. [Casey Thomas](http://github.com/caseypt) helped troubleshoot JavaScript errors. Somehow, the project received first place.
+pac-complaint-browser is built on AxisPhilly's [app-template](http://github.com/axisphilly/app-template) and was hacked together in a few hours as an entry in Philadelphia's 2013 Barcamp News Innovation. [Casey Thomas](http://github.com/caseypt) helped troubleshoot JavaScript errors. Somehow, the project received first place.
 
 ## About the data
 
-pac-complaint-browser is powered by [this Google spreadsheet](), which itself is an import of the [Philadelphia PAC Complaints CSV]() published by OpenData Philly.
+pac-complaint-browser is powered by a Google spreadsheet import of the [Philadelphia PAC Complaints CSV](http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/) published by OpenData Philly.
 
-Note that the data only includes the 2009 - 2012 complaints reported by the Philadelphia Police Advisory Commission, and not those filed with the Police Department's Internal Affairs.
+Note that the data only includes the 2009 - 2012 complaints reported by the Philadelphia Police Advisory Commission, and not those filed with Philadelphia Police Internal Affairs.
 
 ## About the application
 
