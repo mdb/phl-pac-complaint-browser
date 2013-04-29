@@ -2,8 +2,9 @@ if (typeof app === 'undefined' || !app) {
   var app = {};
 }
 
-app.Point = Backbone.View.extend({
-  initialize: function () {
+app.PointView = Backbone.View.extend({
+  initialize: function (opts) {
+    this.mapView = opts.mapView;
     this.template = _.template($('#tooltip-template').html());
   },
 
@@ -11,7 +12,7 @@ app.Point = Backbone.View.extend({
     var self = this;
 
     L.marker([self.model.get('latitude'), self.model.get('longitude')])
-      .addTo(app.map)
+      .addTo(self.mapView.map)
       .bindPopup(self.template({
         type: self.model.get('type'),
         race: self.model.get('race'),

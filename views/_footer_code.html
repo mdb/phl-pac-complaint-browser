@@ -5,16 +5,12 @@
   <script type="text/javascript" src="collections/complaints.js"></script>
   <script type="text/javascript" src="views/point.js"></script>
   <script type="text/javascript" src="views/control.js"></script>
-  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="views/map.js"></script>
+  <script type="text/javascript" src="routers/app.js"></script>
 <% } %>
 <script type="text/template" id="control-template">
   <div class="controls">
-    <form>
-      <select>
-        <option>White</option>
-        <option>Black</option>
-      </selection>
-    </form>
+    <!-- TODO -->
   </div>
 </script>
 <script type="text/template" id="tooltip-template">
@@ -56,42 +52,27 @@
       interpolate : /\{\{(.+?)\}\}/g
     };
 
-    // set up the map configuration
-    app.opts = {
-      mapContainer: 'map',
-      tileURL: 'http://api.tiles.mapbox.com/v3/mdb.map-iis6te5b.jsonp',
-      mapOptions: {
-        center: [39.99, -75.150],
-        zoom: 12,
-        minZoom: 9,
-        maxZoom: 18,
-        maxBounds: [
-          [39.69, -76.20],
-          [40.60, -74.14]
-        ]
-      }
-    };
-
-    app.dispatcher = _.clone(Backbone.Events);
-    app.control = new app.Control({
-      el: '#controls'
-    });
-
-    //app.control.render();
-
     Tabletop.init({
       key: '0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc',
       callback: function(data, tabletop) { 
-        var i,
-            template = _.template($('#tooltip-template').html());
-          
-        app.complaints = new app.Complaints(data);
-        app.initMap(function() {
-          app.complaints.each(function (complaint) {
-            var point = new app.Point({model: complaint});
-            point.render();
-          });
-        });         
+        // declare the mapView configuration
+        var mapOpts = {
+          mapContainer: 'map',
+          tileURL: 'http://api.tiles.mapbox.com/v3/mdb.map-iis6te5b.jsonp',
+          mapOptions: {
+            center: [39.99, -75.150],
+            zoom: 12,
+            minZoom: 9,
+            maxZoom: 18,
+            maxBounds: [
+              [39.69, -76.20],
+              [40.60, -74.14]
+            ]
+          }
+        },
+        complaintsCollection = new app.ComplaintsCollection(data);
+        app.router = new app.Router(complaintsCollection, mapOpts);
+        Backbone.history.start({pushState:true});
       },
       simpleSheet: true 
     });
