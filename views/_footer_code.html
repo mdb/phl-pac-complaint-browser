@@ -2,55 +2,59 @@
   <script type="text/javascript" src="js/app.min.js"></script>
 <% } else { %>
   <script type="text/javascript" src="models/complaint.js"></script>
+  <script type="text/javascript" src="models/control.js"></script>
   <script type="text/javascript" src="collections/complaints.js"></script>
+  <script type="text/javascript" src="collections/controls.js"></script>
   <script type="text/javascript" src="views/point.js"></script>
   <script type="text/javascript" src="views/control.js"></script>
   <script type="text/javascript" src="views/map.js"></script>
   <script type="text/javascript" src="routers/app.js"></script>
 <% } %>
 <script type="text/template" id="control-template">
-  <div class="controls">
-    <!-- TODO -->
-  </div>
+  <select>
+    <option>{{= trait }}</option>
+    {{ _.each(values, function (value) { }}
+      <option>{{= value }}</option>
+    {{ }); }}
+  </select>
 </script>
 <script type="text/template" id="tooltip-template">
   <table>
     <tr>
       <th>Type:</th>
-      <td>{{ type }}</td>
+      <td>{{= type }}</td>
     </tr>
     <tr>
       <th>Unit:</th>
-      <td>{{ unit }}</td>
+      <td>{{= unit }}</td>
     </tr>
     <tr>
       <th>Race:</th>
-      <td>{{ race }}</td>
+      <td>{{= race }}</td>
     </tr>
     <tr>
       <th>Age:</th>
-      <td>{{ age }}</td>
+      <td>{{= age }}</td>
     </tr>
     <tr>
       <th>Sex:</th>
-      <td>{{ sex }}</td>
+      <td>{{= sex }}</td>
     </tr>
     <tr>
       <th>Action:</th>
-      <td>{{ action }}</td>
+      <td>{{= action }}</td>
     </tr>
     <tr>
       <th>Status:</th>
-      <td>{{ status }}</td>
+      <td>{{= status }}</td>
     </tr>
   </table>
 </script>
 <script type="text/javascript">
   $(document).ready(function () {
     // use moustache syntax with underscore templates
-     _.templateSettings = {
-      interpolate : /\{\{(.+?)\}\}/g
-    };
+    _.templateSettings.evaluate = /\{\{(.+?)\}\}/g;
+    _.templateSettings.interpolate = /\{\{=(.+?)\}\}/g;
 
     Tabletop.init({
       key: '0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc',
