@@ -11,10 +11,10 @@
   <script type="text/javascript" src="routers/app.js"></script>
 <% } %>
 <script type="text/template" id="control-template">
-  <select>
-    <option>{{= trait }}</option>
+  <select name="{{= trait }}"class="{{= trait }}">
+    <option value="all">{{= trait }}</option>
     {{ _.each(values, function (value) { }}
-      <option>{{= value }}</option>
+      <option  value="{{= value }}">{{= value }}</option>
     {{ }); }}
   </select>
 </script>
@@ -76,7 +76,7 @@
         },
         complaintsCollection = new app.ComplaintsCollection(data);
         app.router = new app.Router(complaintsCollection, mapOpts);
-        Backbone.history.start({pushState:true});
+        Backbone.history.start();
       },
       simpleSheet: true 
     });
