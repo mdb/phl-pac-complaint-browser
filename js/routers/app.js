@@ -4,64 +4,76 @@ if (typeof app === 'undefined' || !app) {
 
 app.Router = Backbone.Router.extend({
   routes: {
-    "": "index"
+    "": "index",
+    "filtered/:age/:race/:sex/:type/:unit/:status/": "setFilter"
   },
 
-  initialize: function (complaintsCollection, mapOpts) {
-    app.complaintsCollection = complaintsCollection;
-    app.controlsCollection = new app.ControlsCollection(this.getControlsFromComplaints(complaintsCollection.models));
-    app.mapView = new app.MapView(mapOpts);
+  initialize: function (opts) {
+    this.config = opts;
+    app.complaintsCollection = new app.ComplaintsCollection(this.config.data);
+    app.controlsCollection = new app.ControlsCollection(this.getControlsFromComplaints(app.complaintsCollection));
+    app.mapView = new app.MapView(_.defaults(this.config, {
+      collection: app.complaintsCollection,
+      controls: app.controlsCollection,
+      controlTraits: ['age', 'race', 'sex', 'type', 'unit', 'status']
+    }));
+
+    this.on("change:filter", this.filterView);
   },
 
   index: function () {
-    app.mapView.render(function () {
-      app.complaintsCollection.each(function (complaint) {
-        var pointView = new app.PointView({
-          model: complaint,
-          mapView: app.mapView
-        }).render();
-      });
+    app.mapView.render();
+  },
 
-      app.controlsCollection.each(function (control) {
-        var controlView = new app.ControlView({
-          model: control,
-          traits: ['race', 'age', 'sex', 'type', 'unit', 'status']
-        }).render();
-      });
+  setFilter: function (age, race, sex, type, unit, status) {
+    this.filters = arguments;
+    this.trigger('change:filter');
+  },
+
+  itemInFilter: function (item) {
+    var filters = this.filters,
+        filtersLength = filters.length,
+        inFilter,
+        i;
+
+    for (i=0; i<=filtersLength; i++) {
+      if (filters[i] === 'all' || filters[i] === item.get(app.mapView.config.controlTraits[i])) {
+        inFilter = true;
+      } else {
+        inFilter = false;
+        break;
+      }
+    }
+
+    return inFilter;
+  },
+
+  filterView: function () {
+    app.complaintsCollection.reset(this.config.data);
+    var self = this,
+        filtered = _.filter(app.complaintsCollection.models, function (item) {
+          return self.itemInFilter(item);
+        });
+
+    app.complaintsCollection.reset(filtered);
+  },
+
+  getTraits: function (collection, trait) {
+    return _.uniq(collection.pluck(trait), false, function (someTrait) {
+      return someTrait;
     });
   },
 
   getControlsFromComplaints: function (data) {
-    var dataLength = data.length,
+    var self = this,
         key,
-        i,
         collection = [];
 
-    for (i=0; i<=dataLength; i++) {
-      if (i===0) {
-        for (key in data[i].attributes) {
-          collection.push({
-            trait: key,
-            values: [data[i][key]]
-          });
-        }
-      } else {
-        if (data[i] && data[i].attributes) {
-          for (key in data[i].attributes) {
-            var control = _.find(collection, function (item) {
-              return item.trait === key;
-            });
-
-            if (!_.contains(control.values, data[i].get(key))) {
-              if (!data[i].get(key) && !_.contains(control.values, 'Unreported')) {
-                control.values.push('Unreported');
-              } else {
-                control.values.push(data[i].get(key));
-              }
-            }
-          }
-        }
-      }
+    for (key in data.models[0].attributes) {
+      collection.push({
+        trait: key,
+        values: self.getTraits(data, key)
+      });
     }
 
     return collection;
