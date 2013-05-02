@@ -11,7 +11,7 @@ app.ControlView = Backbone.View.extend({
 
   initialize: function (opts) {
     this.template = _.template($('#control-template').html());
-    this.traits = opts.traits || [];
+    this.traits = opts.controlTraits || [];
   },
 
   render: function () {
@@ -45,5 +45,7 @@ app.ControlView = Backbone.View.extend({
     var params = this.getParams(this.$('select :selected'));
 
     location.hash = 'filtered/' + this.buildURL(params);
+    //TODO: why doesn't this work?
+    //app.router.navigate('filtered/' + this.buildURL(params));
   }
 });
