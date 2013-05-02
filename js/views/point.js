@@ -24,5 +24,4 @@ app.PointView = Backbone.View.extend({
         status: self.model.get('status')
       }));
   }
-
 });
