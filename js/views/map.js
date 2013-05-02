@@ -16,7 +16,7 @@ app.MapView = Backbone.View.extend({
       self.drawMap(tile);
       app.pointsView = new app.PointsView({
         mapView: self,
-        collection: app.complaintsCollection
+        collection: self.collection
       });
       app.pointsView.render();
       self.renderControls();
