@@ -49,6 +49,10 @@ app.Router = Backbone.Router.extend({
   },
 
   filterView: function () {
+    if ($('#' + this.config.mapContainer).html() === '') {
+      app.mapView.render();
+    }
+
     app.complaintsCollection.reset(this.config.data);
     var self = this,
         filtered = _.filter(app.complaintsCollection.models, function (item) {
