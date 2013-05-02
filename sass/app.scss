@@ -102,14 +102,21 @@ h3 {
   }
 }
 
-.leaflet-popup-content {
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
+.leaflet-popup-content-wrapper {
+  border-radius: 0;
+  -webkit-border-radius: 0;
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 5px;
+  .leaflet-popup-content {
+
+    table {
+      margin-top: 22px;
+      border-collapse: collapse;
+      border-spacing: 0;
+
+      th, td {
+        border: 1px solid #ddd;
+        padding: 5px;
+      }
     }
   }
 }
