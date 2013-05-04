@@ -37,7 +37,16 @@ app.Router = Backbone.Router.extend({
         i;
 
     for (i=0; i<=filtersLength; i++) {
-      if (filters[i] === 'all' || filters[i] === item.get(app.mapView.config.controlTraits[i])) {
+      if (filters[i] === 'all') {
+        inFilter = true;
+      } else if (i === this.ageTraitIndex(app.mapView.config.controlTraits)) {
+        if (this.withinAgeFilter(item, filters[i])) {
+          inFilter = true;
+        } else {
+          inFilter = false;
+          break;
+        }
+      } else if (filters[i] === item.get(app.mapView.config.controlTraits[i])) {
         inFilter = true;
       } else {
         inFilter = false;
@@ -46,6 +55,31 @@ app.Router = Backbone.Router.extend({
     }
 
     return inFilter;
+  },
+
+  withinAgeFilter: function (item, filter) {
+    var minAge = parseInt(filter.replace(/\s+/g, ' ').split('-')[0], 10),
+        maxAge = parseInt(filter.replace(/\s+/g, ' ').split('-')[1], 10),
+        age = item.get('age'),
+        withinFilter = false;
+    
+    if ((age >= minAge) && age <= maxAge) {
+      withinFilter = true;
+    }
+
+    return withinFilter;
+  },
+
+  ageTraitIndex: function (traits) {
+    var traitsLength = traits.length,
+        i;
+
+    for (i=0; i<=traitsLength; i++) {
+      if (traits[i] === 'age') {
+        return i;
+        break;
+      }
+    }
   },
 
   filterView: function () {

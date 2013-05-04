@@ -18,9 +18,20 @@ app.ControlView = Backbone.View.extend({
     if (_.contains(this.traits, this.model.get('trait'))) {
       this.$el.find('form div').append(this.template({
         trait: this.model.get('trait'),
-        values: this.model.get('values')
+        values: this.getValues(this.model)
       }));
       return this;
+    }
+  },
+
+  getValues: function (model) {
+    var trait = model.get('trait'),
+        values = model.get('values');
+
+    if (trait === 'age') {
+      return ['0 - 19', '20 - 29', '30 - 39', '40 - 49', '50 - 59', '60 - 69', '70 - 79', '80 - 89', '90 - 99'];
+    } else {
+      return values;
     }
   },
 
