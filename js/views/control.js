@@ -37,7 +37,7 @@ app.ControlView = Backbone.View.extend({
 
   getParams: function ($array) {
     var i,
-        arrLength = $array.length
+        arrLength = $array.length,
         values = [];
 
     for (i=0; i<=arrLength; i++) {
@@ -48,7 +48,7 @@ app.ControlView = Backbone.View.extend({
   },
 
   buildURL: function (params) {
-    return params.join('/')
+    return params.join('/');
   },
 
   submit: function (e) {
