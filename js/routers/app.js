@@ -72,14 +72,17 @@ app.Router = Backbone.Router.extend({
 
   ageTraitIndex: function (traits) {
     var traitsLength = traits.length,
+        traitIndex,
         i;
 
     for (i=0; i<=traitsLength; i++) {
       if (traits[i] === 'age') {
-        return i;
+        traitIndex = i;
         break;
       }
     }
+
+    return traitIndex;
   },
 
   filterView: function () {
