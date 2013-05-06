@@ -1,9 +1,24 @@
+var appFiles = [
+  'js/models/*.js',
+  'js/collections/*.js',
+  'js/views/*.js',
+  'js/routers/*.js'
+],
+
+libFiles = [
+  'js/lib/underscore.1.4.1.js',
+  'js/lib/backbone.0.9.10.js',
+  'js/lib/tabletop.1.2.1.js',
+  'js/lib/leaflet.js',
+  'js/lib/wax.leaf.min.js'
+];
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jshint: {
-      all: ['js/app.js']
+      all: appFiles
     },
     uglify: {
       options: {
@@ -11,13 +26,19 @@ module.exports = function(grunt) {
       },
       app: {
         files: {
-          'www/js/app.min.js': 'js/app.js'
+          'www/js/app.min.js': appFiles
         }
       },
       lib: {
         files: {
-          'www/js/app.libraries.min.js': 'js/lib/*'
+          'www/js/app.libraries.min.js': libFiles
         }
+      }
+    },
+    images: {
+      dist: {
+        src: 'js/lib/images',
+        dest: 'www/js/images'
       }
     },
     sass: {
@@ -26,7 +47,7 @@ module.exports = function(grunt) {
           style: 'compressed'
         },
         files: {
-          'www/css/app.css': 'sass/css/app.scss'
+          'www/css/app.css': 'sass/app.scss'
         }
       }
     },
@@ -38,7 +59,7 @@ module.exports = function(grunt) {
     s3: {
       key: process.env.AWS_ACCESS_KEY_ID,
       secret: process.env.AWS_SECRET_ACCESS_KEY,
-      bucket: 'apps.axisphilly.org',
+      bucket: process.env.AWS_BUCKET,
       access: 'public-read',
       upload: [
         {
@@ -50,17 +71,18 @@ module.exports = function(grunt) {
           dest: '<%= pkg.name %>/js'
         },
         {
-          src: 'www/css/*',
-          dest: '<%= pkg.name %>/css'
+          src: 'www/js/images/*',
+          dest: '<%= pkg.name %>/js/images'
         },
         {
-          src: 'www/data/*',
-          dest: '<%= pkg.name %>/data'
+          src: 'www/css/*',
+          dest: '<%= pkg.name %>/css'
         }
       ]
     }
   });
 
+  grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -68,6 +90,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-s3');
 
   grunt.registerTask('default', ''); // Intentionally left blank in the interest of being explicit
-  grunt.registerTask('build', ['jshint', 'uglify', 'sass', 'shell']);
+  grunt.registerTask('build', ['jshint', 'uglify', 'images', 'sass', 'shell']);
   grunt.registerTask('deploy', ['s3']);
 };
