@@ -2,3 +2,7 @@ node_modules
 .DS_Store
 *.env
 .sass-cache
+www/*.html
+www/css
+www/js
+css/*.css
