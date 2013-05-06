@@ -57,6 +57,10 @@
     _.templateSettings.evaluate = /\{\{(.+?)\}\}/g;
     _.templateSettings.interpolate = /\{\{=(.+?)\}\}/g;
 
+    <% if (env === 'production') { %>
+      L.Icon.Default.imagePath = 'js/images';
+    <% } %>
+
     Tabletop.init({
       key: '0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc',
       callback: function(data, tabletop) { 
