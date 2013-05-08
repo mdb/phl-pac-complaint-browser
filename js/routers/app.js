@@ -75,7 +75,7 @@ app.Router = Backbone.Router.extend({
         traitIndex,
         i;
 
-    for (i=0; i<=traitsLength; i++) {
+    for (i=0; i<traitsLength; i++) {
       if (traits[i] === 'age') {
         traitIndex = i;
         break;
