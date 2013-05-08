@@ -57,8 +57,6 @@ app.ControlView = Backbone.View.extend({
     e.preventDefault();
     var params = this.getParams(this.$('select :selected'));
 
-    location.hash = 'filtered/' + this.buildURL(params) + '/';
-    //TODO: why doesn't this work?
-    //app.router.navigate('filtered/' + this.buildURL(params));
+    app.router.navigate('filtered/' + this.buildURL(params) + '/', { trigger: true });
   }
 });
