@@ -29,7 +29,7 @@ app.ControlView = Backbone.View.extend({
         values = model.get('values');
 
     if (trait === 'age') {
-      return ['0 - 19', '20 - 29', '30 - 39', '40 - 49', '50 - 59', '60 - 69', '70 - 79', '80 - 89', '90 - 99'];
+      return ['0-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99'];
     } else {
       return values;
     }
@@ -40,8 +40,10 @@ app.ControlView = Backbone.View.extend({
         arrLength = $array.length,
         values = [];
 
-    for (i=0; i<=arrLength; i++) {
-      values.push($($array[i]).attr('value'));
+    for (i=0; i<arrLength; i++) {
+      var value = $($array[i]).attr('value');
+
+      values.push(value.replace(/ /g, '-'));
     }
 
     return values;
@@ -55,7 +57,7 @@ app.ControlView = Backbone.View.extend({
     e.preventDefault();
     var params = this.getParams(this.$('select :selected'));
 
-    location.hash = 'filtered/' + this.buildURL(params);
+    location.hash = 'filtered/' + this.buildURL(params) + '/';
     //TODO: why doesn't this work?
     //app.router.navigate('filtered/' + this.buildURL(params));
   }

@@ -36,7 +36,7 @@ app.Router = Backbone.Router.extend({
         inFilter,
         i;
 
-    for (i=0; i<=filtersLength; i++) {
+    for (i=0; i<filtersLength; i++) {
       if (filters[i] === 'all') {
         inFilter = true;
       } else if (i === this.ageTraitIndex(app.mapView.config.controlTraits)) {
@@ -46,7 +46,7 @@ app.Router = Backbone.Router.extend({
           inFilter = false;
           break;
         }
-      } else if (filters[i] === item.get(app.mapView.config.controlTraits[i])) {
+      } else if (filters[i].replace(/-/g, ' ') === item.get(app.mapView.config.controlTraits[i])) {
         inFilter = true;
       } else {
         inFilter = false;
