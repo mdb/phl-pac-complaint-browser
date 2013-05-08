@@ -46,6 +46,9 @@ app.Router = Backbone.Router.extend({
           inFilter = false;
           break;
         }
+      } else if ((filters[i] === 'Data-Missing') && (item.get(app.mapView.config.controlTraits[i]) === '')) {
+        inFilter = true;
+        break;
       } else if (filters[i].replace(/-/g, ' ') === item.get(app.mapView.config.controlTraits[i])) {
         inFilter = true;
       } else {
@@ -100,9 +103,22 @@ app.Router = Backbone.Router.extend({
   },
 
   getTraits: function (collection, trait) {
-    return _.uniq(collection.pluck(trait), false, function (someTrait) {
+    var traits = _.uniq(collection.pluck(trait), false, function (someTrait) {
       return someTrait;
     });
+
+    return this.sanitizedTraits(traits);
+  },
+
+  sanitizedTraits: function (traitsArr) {
+    var traits = traitsArr,
+        emptyItemIndex = traits.indexOf('');
+
+    if (emptyItemIndex !== -1) {
+      traits[emptyItemIndex] = 'Data Missing';
+    }
+
+    return traits;
   },
 
   getControlsFromComplaints: function (data) {
