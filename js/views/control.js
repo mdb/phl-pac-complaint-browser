@@ -6,7 +6,8 @@ app.ControlView = Backbone.View.extend({
   el: $('#controls'),
 
   events: {
-    'submit form#control-form': 'submit'
+    'submit form#control-form': 'submit',
+    'click a.clear': 'clear',
   },
 
   initialize: function (opts) {
@@ -58,5 +59,10 @@ app.ControlView = Backbone.View.extend({
     var params = this.getParams(this.$('select :selected'));
 
     app.router.navigate('filtered/' + this.buildURL(params) + '/', { trigger: true });
+  },
+
+  clear: function (e) {
+    e.preventDefault();
+    app.router.navigate('filtered/all/all/all/all/all/all/all/', { trigger: true });
   }
 });

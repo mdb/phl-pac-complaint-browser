@@ -70,7 +70,11 @@ h3 {
     }
 
     a.clear {
-      display: none;
+      float: right;
+      margin-right: 10px;
+      margin-top: 5px;
+      font-size: 11px;
+      color: #888;
     }
 
     input {
