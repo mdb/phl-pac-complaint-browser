@@ -16,7 +16,7 @@ header {
 }
 
 p {
-  margin: 0 0 15px 0;
+  margin: 0 0 12px 0;
 }
 
 h1 {
@@ -67,6 +67,10 @@ h3 {
     select, option {
       width: 100%;
       margin-bottom: 3px;
+    }
+
+    a.clear {
+      display: none;
     }
 
     input {
