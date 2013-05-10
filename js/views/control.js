@@ -7,7 +7,7 @@ app.ControlView = Backbone.View.extend({
 
   events: {
     'submit form#control-form': 'submit',
-    'click a.clear': 'clear',
+    'click a.clear': 'clear'
   },
 
   initialize: function (opts) {
