@@ -5,7 +5,7 @@ if (typeof app === 'undefined' || !app) {
 app.Router = Backbone.Router.extend({
   routes: {
     "": "index",
-    "filtered/:age/:race/:sex/:type/:unit/:status/": "setFilter"
+    "filtered/:age/:race/:sex/:type/:unit/:action/:status/": "setFilter"
   },
 
   initialize: function (opts) {
@@ -15,7 +15,7 @@ app.Router = Backbone.Router.extend({
     app.mapView = new app.MapView(_.defaults(this.config, {
       collection: app.complaintsCollection,
       controls: app.controlsCollection,
-      controlTraits: ['age', 'race', 'sex', 'type', 'unit', 'status']
+      controlTraits: ['age', 'race', 'sex', 'type', 'unit', 'action', 'status']
     }));
 
     this.on("change:filter", this.filterView);
@@ -49,7 +49,7 @@ app.Router = Backbone.Router.extend({
       } else if ((filters[i] === 'Data-Missing') && (item.get(app.mapView.config.controlTraits[i]) === '')) {
         inFilter = true;
         break;
-      } else if (filters[i].replace(/-/g, ' ') === item.get(app.mapView.config.controlTraits[i])) {
+      } else if (filters[i].replace(/-/g, ' ').toLowerCase() === item.get(app.mapView.config.controlTraits[i]).toLowerCase()) {
         inFilter = true;
       } else {
         inFilter = false;
@@ -103,8 +103,19 @@ app.Router = Backbone.Router.extend({
   },
 
   getTraits: function (collection, trait) {
-    var traits = _.uniq(collection.pluck(trait), false, function (someTrait) {
-      return someTrait;
+    var isAlpha = function (str) {
+      if(/^[a-z]/i.test(str)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    traits = _.uniq(collection.pluck(trait), false, function (someTrait) {
+      if (isAlpha(someTrait)) {
+        return someTrait.toLowerCase();
+      } else {
+        return someTrait;
+      }
     });
 
     return this.sanitizedTraits(traits);
