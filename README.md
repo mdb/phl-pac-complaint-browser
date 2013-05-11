@@ -39,7 +39,7 @@ To run the server: `$ node server.js`
 
 Visit [http://0.0.0.0:3000](http://0.0.0.0:3000) in your web browser.
 
-## Building th project
+## Building the project
 
 `grunt build` compiles the code in production mode. It lints, concatenates, and minifies JS files, bakes out EJS templates into HTML and compiles SASS to CSS.
 
