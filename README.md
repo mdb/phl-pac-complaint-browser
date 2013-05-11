@@ -23,39 +23,25 @@ Note that the data only includes the 2009 - 2012 complaints reported by the Phil
 
 Node.js and [Grunt](http://www.gruntjs.com) handle asset management, static view compiling, and build-time responsibilities.
 
-On OS X, you can use Homebrew to install Node: `$ brew install node`
+On OS X, Node.js can be installed with Homebrew: `$ brew install node`
 
-There is also an install package for OS X and other systems available on the Node [website](http://nodejs.org/download/).
+Alternatively, install packages can be downloaded from the Node [website](http://nodejs.org/download/).
 
-Install the [Grunt](https://github.com/gruntjs/grunt-cli) command line tool globally, with the command line interface: `$ npm install -g grunt-cli`
+Install the [Grunt](https://github.com/gruntjs/grunt-cli) command line tool globally with its command line interface: `$ npm install -g grunt-cli`
 
 Install project dependencies (in the project folder): `$ npm install`
 
 ## Development/Working locally
 
-In local development, [Express](http://expressjs.com/) serves files, compiles SASS, and renders views. 
+In local development, [Express](http://expressjs.com/) serves files, compiles SASS and renders views. 
 
 To run the server: `$ node server.js`
 
 Visit [http://0.0.0.0:3000](http://0.0.0.0:3000) in your web browser.
 
-## Add a new page
+## Building th project
 
-Adding a new page to the app is as simple as adding a route to the Express server and assigning it a view.
-
-- Add a new route to Express. At the very least, you have to pass the environment variable to the view, in order to reference development/production resources respectively. For example:
-
-        app.get('/route-name', function(req, res){
-          res.render('view-name', {
-            env: app.settings.env
-          });
-        });
-
-- Then, create a new view in the `view` folder. The view name is the first parameter of the `res.render` method. The view can just be an `html` file, or it can use EJS templating to be more dynamic. Just make sure you pass the EJS variables to the route; which is the second parameter of the `res.render` method.
-
-## Building a project
-
-`grunt build` compiles your project in production mode. It will lint, concatenate, and minify JS files, bake out the EJS templates into HTML, and compile SASS to CSS.
+`grunt build` compiles the code in production mode. It lints, concatenates, and minifies JS files, bakes out EJS templates into HTML and compiles SASS to CSS.
 
     $ grunt build
 
@@ -68,12 +54,12 @@ The grunt commands can also be run independently:
 
 ## Deployment
 
-Deployment to S3 is handled by grunt. Before deployment, do the following:
+Deployment to Amazon S3 is handled by grunt. Before deployment, do the following:
 
-- The value of the `name` key in `package.json` will be used as the S3 folder name, so make sure it's URL compliant.
-- **Do not add the AWS credentials to the Gruntfile**. Grunt expects environmental variables stored as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. Our convention is to store them in a file called `.env`, which you can then `source` to load into your environment.
-- Check all the of `src` and `dest` values in the s3 grunt task `upload` key to make sure they are valid. The defaults are `www/*`, `www/js/*`, `www/css/*`, and `www/data/*`. Basically, they should match the folder structure of `www`.
+- The value of the `name` key in `package.json` will be used as the S3 folder name. Make sure it's URL-compliant.
+- **Do not add the AWS credentials to the Gruntfile**. Grunt expects environmental variables stored as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. These can be stored in an `.env` file loaded into your environment.
+- Make sure all `src` and `dest` values in the s3 grunt task `upload` key are valid. They should match the folder structure of `www`.
 
-Once you checked all of the above, you can deploy the app by running:
+Deploy the app:
 
     $ grunt deploy
