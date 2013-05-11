@@ -2,13 +2,13 @@
 
 A map of the 2009 - 2012 complaints logged by the Philadelphia Police Advisory Commission.
 
-pac-complaint-browser is built on AxisPhilly's [app-template](http://github.com/axisphilly/app-template) and was hacked together in a few hours as an entry in Philadelphia's 2013 Barcamp News Innovation. [Casey Thomas](http://github.com/caseypt) helped troubleshoot JavaScript errors. Somehow, the project received first place.
+phl-pac-complaint-browser is built on AxisPhilly's [app-template](http://github.com/axisphilly/app-template) and was hacked together in a few hours as an entry in Philadelphia's 2013 Barcamp News Innovation. [Casey Thomas](http://github.com/caseypt) helped troubleshoot JavaScript errors. Somehow, the project received first place.
 
 ## About the data
 
-pac-complaint-browser is powered by a Google spreadsheet import of the [Philadelphia PAC Complaints CSV](http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/) published by OpenData Philly.
+phl-pac-complaint-browser is powered by a <a href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc#gid=0">Google spreadsheet</a> import of the [Philadelphia PAC Complaints CSV](http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/) published by OpenData Philly.
 
-Note that the data only includes the 2009 - 2012 complaints reported by the Philadelphia Police Advisory Commission, and not those filed with Philadelphia Police Internal Affairs.
+Note that the data only includes the 2009 - 2012 complaints reported by the Philadelphia Police Advisory Commission and not those filed with Philadelphia Police Internal Affairs.
 
 ## About the application
 
@@ -55,7 +55,7 @@ Adding a new page to the app is as simple as adding a route to the Express serve
 
 ## Building a project
 
-`grunt build` compiles your project in production mode. It will lint, concatenate, and minify JS files, bake-out the EJS templates into HTML, and compile SASS to CSS.
+`grunt build` compiles your project in production mode. It will lint, concatenate, and minify JS files, bake out the EJS templates into HTML, and compile SASS to CSS.
 
     $ grunt build
 
