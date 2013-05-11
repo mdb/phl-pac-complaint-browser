@@ -61,6 +61,18 @@
       L.Icon.Default.imagePath = 'js/images';
     <% } %>
 
+    $("#hide").click(function() {
+      $("#hide").hide();
+      $("#show").show();
+      $(".description").slideUp();
+    });
+
+    $("#show").click(function() {
+      $("#show").hide();
+      $("#hide").show();
+      $(".description").slideDown();
+    });
+
     Tabletop.init({
       key: '0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc',
       callback: function(data, tabletop) { 
