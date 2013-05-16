@@ -6,6 +6,7 @@ var appFiles = [
 ],
 
 libFiles = [
+  'js/lib/jquery-1.9.1.js',
   'js/lib/underscore.1.4.1.js',
   'js/lib/backbone.0.9.10.js',
   'js/lib/tabletop.1.2.1.js',
@@ -51,6 +52,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    jasmine: {
+      src: 'js/**/*.js',
+      options: {
+        specs: 'spec/**/*.js',
+        vendor: libFiles
+      }
+    },
     shell: {
       build: {
         command: 'NODE_ENV=production PORT=3001 node build.js'
@@ -85,11 +93,13 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-s3');
 
   grunt.registerTask('default', ''); // Intentionally left blank in the interest of being explicit
-  grunt.registerTask('build', ['jshint', 'uglify', 'images', 'sass', 'shell']);
+  grunt.registerTask('test', ['jshint', 'jasmine']);
+  grunt.registerTask('build', ['test', 'uglify', 'images', 'sass', 'shell']);
   grunt.registerTask('deploy', ['s3']);
 };
