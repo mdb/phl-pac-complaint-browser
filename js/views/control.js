@@ -12,7 +12,7 @@ app.ControlView = Backbone.View.extend({
 
   initialize: function (opts) {
     this.template = _.template($('#control-template').html());
-    this.traits = opts.controlTraits || [];
+    this.traits = opts && opts.controlTraits ? opts.controlTraits : [];
   },
 
   render: function () {
