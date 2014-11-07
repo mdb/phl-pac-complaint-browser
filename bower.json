@@ -8,10 +8,12 @@
     "open data"
   ],
   "ignore": [
-    "node_modules"
+    "node_modules",
+    "bower_components"
   ],
   "dependencies": {
     "platform": "Polymer/platform#~0.4.2",
-    "polymer": "Polymer/polymer#~0.4.2"
+    "polymer": "Polymer/polymer#~0.4.2",
+    "google-sheets": ""
   }
 }

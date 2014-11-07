@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>google-sheets Demo</title>
+    <script src="../bower_components/platform/platform.js"></script>
+    <link rel="import" href="../bower_components/google-sheets/google-sheets.html">
+  </head>
+  <body unresolved>
+    <google-sheets id="sheet" key="0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc" published></google-sheets>
+
+    <template id="complaints" bind>
+      <ul>
+        <template repeat="{{rows}}">
+        <li>
+          <ul>
+            <li>Type: {{gsx$type.$t}}</li>
+            <li>Unit: {{gsx$unit.$t}}</li>
+            <li>Age: {{gsx$age.$t}}</li>
+            <li>Race: {{gsx$race.$t}}</li>
+            <li>Sex: {{gsx$sex.$t}}</li>
+            <li>Action: {{gsx$action.$t}}</li>
+            <li>Status: {{gsx$status.$t}}</li>
+          </ul>
+        </template>
+      </ul>
+    </template>
+  </body>
+
+  <script>
+    (function () {
+      var sheet = document.querySelector('#sheet');
+
+      sheet.addEventListener('google-sheet-data', function(e) {
+        if (e.detail.type === 'rows') {
+          document.querySelector('#complaints').model = this;
+        }
+      });
+    })();
+  </script>
+</html>
