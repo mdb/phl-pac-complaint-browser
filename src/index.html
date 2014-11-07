@@ -4,26 +4,60 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>google-sheets Demo</title>
     <script src="../bower_components/platform/platform.js"></script>
-    <link rel="import" href="../bower_components/google-sheets/google-sheets.html">
+    <link rel="import" href="../bower_components/google-sheets/google-sheets.html"/>
+    <link rel="import" href="../bower_components/google-map/google-map.html"/>
+    <style>
+      body, html {
+        height: 100%;
+        margin: 0;
+      }
+      google-map {
+        display: block;
+        height: 100%;
+      }
+    </style>
   </head>
   <body unresolved>
     <google-sheets id="sheet" key="0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc" published></google-sheets>
 
-    <template id="complaints" bind>
-      <ul>
-        <template repeat="{{rows}}">
-        <li>
-          <ul>
-            <li>Type: {{gsx$type.$t}}</li>
-            <li>Unit: {{gsx$unit.$t}}</li>
-            <li>Age: {{gsx$age.$t}}</li>
-            <li>Race: {{gsx$race.$t}}</li>
-            <li>Sex: {{gsx$sex.$t}}</li>
-            <li>Action: {{gsx$action.$t}}</li>
-            <li>Status: {{gsx$status.$t}}</li>
-          </ul>
-        </template>
-      </ul>
+    <template id="rows" bind>
+      <google-map latitude="39.99" longitude="-75.150" zoom="12" disableDefaultUI zoomable="true">
+
+      <template repeat="{{rows}}">
+        <google-map-marker latitude="{{gsx$latitude.$t}}" longitude="{{gsx$longitude.$t}}">
+          <table>
+            <tr>
+              <td>Type</td>
+              <td>{{row.gsx$type.$t}}</td>
+            </tr>
+            <tr>
+              <td>Unit</td>
+              <td>{{row.gsx$unit.$t}}</td>
+            </tr>
+            <tr>
+              <td>Age</td>
+              <td>{{row.gsx$age.$t}}</td>
+            </tr>
+            <tr>
+              <td>Race</td>
+              <td>{{row.gsx$race.$t}}</td>
+            </tr>
+            <tr>
+              <td>Sex</td>
+              <td>{{row.gsx$sex.$t}}</td>
+            </tr>
+            <tr>
+              <td>Action</td>
+              <td>{{row.gsx$action.$t}}</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>{{row.gsx$status.$t}}</td>
+            </tr>
+          </table>
+        </google-map-marker>
+      </template>
+      </google-map>
     </template>
   </body>
 
@@ -33,7 +67,8 @@
 
       sheet.addEventListener('google-sheet-data', function(e) {
         if (e.detail.type === 'rows') {
-          document.querySelector('#complaints').model = this;
+          console.log(e);
+          document.querySelector('#rows').model = this;
         }
       });
     })();
