@@ -6,3 +6,4 @@ www/*.html
 www/css
 www/js
 css/*.css
+bower_components
