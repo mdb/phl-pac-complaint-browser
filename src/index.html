@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>google-sheets Demo</title>
     <script src="../bower_components/platform/platform.js"></script>
-    <link rel="import" href="../bower_components/google-sheets/google-sheets.html"/>
-    <link rel="import" href="../bower_components/google-map/google-map.html"/>
-
+    <link rel="import" href="../bower_components/google-sheets/google-sheets.html" />
+    <link rel="import" href="../bower_components/google-map/google-map.html" />
+    <link rel="import" href="../bower_components/core-selector/core-selector.html" />
   </head>
   <body unresolved>
     <polymer-element name="phl-pac-complaints">
@@ -73,6 +73,12 @@
             <p>The data does not include additional complaints filed with Philadelphia Police Internal Affairs.</p>
             <p>Please reference the application's <a href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc#gid=0">Google Spreadsheet</a>, <a href="http://github.com/mdb/phl-pac-complaint-browser">source code</a> and <a href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open Data Philly's PAC Complaints data</a> in accessing data integrity and accuracy. Defects can be logged on <a href="https://github.com/mdb/phl-pac-complaint-browser/issues">Github</a>.</p>
           </div>
+
+          <core-selector valueattr="label" selected="foo">
+            <div label="foo">foo</div>
+            <div label="bar">bar</div>
+            <div label="zot">zot</div>
+          </core-selector>
 
           <template id="filters" repeat="{{ filters }}" bind>
             <select name="{{ trait }}">

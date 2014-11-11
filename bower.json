@@ -14,6 +14,7 @@
   "dependencies": {
     "platform": "Polymer/platform#~0.4.2",
     "polymer": "Polymer/polymer#~0.4.2",
-    "google-sheets": ""
+    "google-sheets": "",
+    "core-selector": "Polymer/core-selector#0.4.2"
   }
 }
