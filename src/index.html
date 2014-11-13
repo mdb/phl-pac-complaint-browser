@@ -7,6 +7,7 @@
     <link rel="import" href="../bower_components/google-sheets/google-sheets.html" />
     <link rel="import" href="../bower_components/google-map/google-map.html" />
     <link rel="import" href="../bower_components/core-selector/core-selector.html" />
+    <link rel="import" href="../bower_components/core-collapse/core-collapse.html" />
   </head>
   <body unresolved>
     <polymer-element name="phl-pac-complaints">
@@ -75,12 +76,14 @@
           </div>
 
           <template id="filters" repeat="{{ filters }}" bind>
-            <h1>{{ capitalizedTrait }}</h1>
-            <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
-              <template repeat="{{ value in values }}">
-              <div trait="{{ trait }}" label="{{ value }}">{{ value }}</div>
-              </template>
-            </core-selector>
+          <h1 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h1>
+            <core-collapse id="collapse-{{ trait }}">
+              <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
+                <template repeat="{{ value in values }}">
+                <div trait="{{ trait }}" label="{{ value }}">{{ value }}</div>
+                </template>
+              </core-selector>
+            </core>
           </template>
         </section>
 
@@ -195,6 +198,12 @@
 
       propertyName: function (property) {
         return 'gsx$' + property;
+      },
+
+      toggleDropdown: function (evt, detail, sender) {
+        var trait = sender.getAttribute('trait');
+
+        this.shadowRoot.querySelector('#collapse-' + trait).toggle();
       }
     });
   </script>
