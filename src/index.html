@@ -75,7 +75,7 @@
           </div>
 
           <template id="filters" repeat="{{ filters }}" bind>
-            <h1>{{ trait }}</h1>
+            <h1>{{ capitalizedTrait }}</h1>
             <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
               <template repeat="{{ value in values }}">
               <div trait="{{ trait }}" label="{{ value }}">{{ value }}</div>
@@ -165,8 +165,13 @@
       buildFilterObj: function (property, data) {
         return {
           trait: property,
+          capitalizedTrait: this.capitalize(property),
           values: this.getUniqueValues(property, data)
         };
+      },
+
+      capitalize: function (str) {
+        return str.charAt(0).toUpperCase() + str.slice(1)
       },
 
       getUniqueValues: function (property, data) {
