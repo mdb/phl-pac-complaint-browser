@@ -41,17 +41,43 @@
             border-bottom: 1px solid #ddd;
           }
 
+          h3 {
+            cursor: pointer;
+            border: 1px solid #ccc;
+            line-height: 26px;
+            padding-left: 5px;
+            margin-top: -1px;
+            background: #eee;
+          }
+
           p {
             margin-bottom: 15px;
           }
 
           span.filter {
             display: block;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            line-height: 24px;
+            padding-left: 5px;
+          }
+
+          span.filter-0 {
+            margin-top: -1px;
+          }
+
+          span.filter:hover {
+            cursor: pointer;
           }
 
           google-map {
             display: block;
             height: 100%;
+          }
+
+          core-collapse {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
           }
 
           .controls {
@@ -83,8 +109,8 @@
             <h3 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
             <core-collapse id="collapse-{{ trait }}">
               <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
-                <template repeat="{{ value in values }}">
-                  <span class="filter" trait="{{ trait }}" label="{{ value }}">{{ value }}</span>
+                <template repeat="{{ value, i in values }}">
+                  <span class="filter filter-{{ i }}" trait="{{ trait }}" label="{{ value }}">{{ value }}</span>
                 </template>
               </core-selector>
             </core>
