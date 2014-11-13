@@ -45,6 +45,10 @@
             margin-bottom: 15px;
           }
 
+          span.filter {
+            display: block;
+          }
+
           google-map {
             display: block;
             height: 100%;
@@ -76,11 +80,11 @@
           </div>
 
           <template id="filters" repeat="{{ filters }}" bind>
-          <h1 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h1>
+            <h3 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
             <core-collapse id="collapse-{{ trait }}">
               <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
                 <template repeat="{{ value in values }}">
-                <div trait="{{ trait }}" label="{{ value }}">{{ value }}</div>
+                  <span class="filter" trait="{{ trait }}" label="{{ value }}">{{ value }}</span>
                 </template>
               </core-selector>
             </core>
