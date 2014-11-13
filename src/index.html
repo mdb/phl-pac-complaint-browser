@@ -74,19 +74,13 @@
             <p>Please reference the application's <a href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc#gid=0">Google Spreadsheet</a>, <a href="http://github.com/mdb/phl-pac-complaint-browser">source code</a> and <a href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open Data Philly's PAC Complaints data</a> in accessing data integrity and accuracy. Defects can be logged on <a href="https://github.com/mdb/phl-pac-complaint-browser/issues">Github</a>.</p>
           </div>
 
-          <core-selector on-core-select="{{ applyFilters }}" id="testfilters" valueattr="label">
-            <div label="White">White</div>
-            <div label="American Indian">American Indian</div>
-            <div label="zot">zot</div>
-          </core-selector>
-
           <template id="filters" repeat="{{ filters }}" bind>
-            <select name="{{ trait }}">
-              <option value="all">{{ trait }}</option>
+            <h1>{{ trait }}</h1>
+            <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
               <template repeat="{{ value in values }}">
-                <option value="{{ value }}">{{ value }}</option>
+              <div trait="{{ trait }}" label="{{ value }}">{{ value }}</div>
               </template>
-            </select>
+            </core-selector>
           </template>
         </section>
 
@@ -148,10 +142,11 @@
       },
 
       applyFilters: function (e, detail) {
-        var filter = detail.item.getAttribute('label');
+        var filter = detail.item.getAttribute('label'),
+            property = this.propertyName(detail.item.getAttribute('trait'));
 
         this.$.rows.model.rows = this.$.rows.model.rows.filter(function (complaint) {
-          return complaint.gsx$race.$t === filter;
+          return complaint[property]['$t'] === filter;
         });
       },
 
@@ -177,7 +172,7 @@
       getUniqueValues: function (property, data) {
         var flags = [],
             output = [],
-            propertyName = 'gsx$' + property,
+            propertyName = this.propertyName(property),
             value;
 
         data.forEach(function (item) {
@@ -191,6 +186,10 @@
         });
 
         return output;
+      },
+
+      propertyName: function (property) {
+        return 'gsx$' + property;
       }
     });
   </script>
