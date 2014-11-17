@@ -191,6 +191,16 @@
 
           <template repeat="{{rows}}">
             <google-map-marker latitude="{{gsx$latitude.$t}}" longitude="{{gsx$longitude.$t}}">
+              <style>
+                table {
+                  border-collapse: collapse;
+                }
+
+                td {
+                  border: 1px solid #ccc;
+                  padding: 3px;
+                }
+              </style>
               <table>
                 <tr>
                   <td>Type</td>
