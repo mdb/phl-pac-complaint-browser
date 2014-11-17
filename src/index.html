@@ -67,6 +67,16 @@
             margin-top: -1px;
           }
 
+          span[active] {
+            font-weight: bold;
+          }
+
+          span[active]:after {
+            content: "\2713";
+            float: right;
+            margin-right: 5px;
+          }
+
           span.filter:hover {
             cursor: pointer;
           }
@@ -74,6 +84,16 @@
           span.filter-by {
             display: block;
             margin-bottom: 5px;
+          }
+
+          span.clear-all {
+            float: right;
+            margin-top: -20px;
+          }
+
+          span.clear-all:before {
+            content: "x";
+            margin-right: 3px;
           }
 
           button.about {
@@ -105,12 +125,23 @@
             margin-bottom: 3px;
           }
 
+          button {
+            background: none;
+            border: none;
+            text-decoration: underline;
+          }
+
+          button:hover {
+            cursor: pointer;
+          }
+
         </style>
         <section class="controls">
           <h1>Philadelphia Police Advisory Commission Complaints</h1>
           <h2>2009 &ndash; 2012</h2>
 
           <span class="filter-by">Filter by:</span>
+          <span on-click="{{ renderAll }}" class="clear-all">clear</span>
 
           <template id="filters" repeat="{{ filters }}" bind>
             <h3 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
@@ -123,10 +154,26 @@
             </core>
           </template>
 
-          <button class="about" on-click="{{ toggleOverlay }}">About</button>
+          <ul class="fine-print">
+            <li class="about" on-click="{{ toggleOverlay }}">About</li>
+            <li><a href="http://www.mikeball.info">2014 MDB</a></li>
+          </ul>
 
           <core-overlay id="overlay" layered backdrop>
+            <style>
+              #description {
+                background: #fff;
+                width: 500px;
+                padding: 20px;
+              }
+
+              #description p {
+                font-size: 16px;
+                line-height: 22px;
+              }
+            </style>
             <div id="description">
+              <h2>About</h2>
               <p>This map plots 2009 &ndash; 2012 complaints filed with the Philadelphia Police Advisory Commission by citizens against Philadelphia Police officers. Click a marker to view complaint details.</p>
               <p>The data is published by <a href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open Data Philly</a> and has been imported to a public <a href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFlPNHVINHY2dVhfODNsY2JWU0U0NHc&usp=sharing">Google Spreadsheet</a>. According to Open Data Philly, the data comes directly from the Police Advisory Commission Complaint Database.</p>
               <p>The data does not include additional complaints filed with Philadelphia Police Internal Affairs.</p>
@@ -191,6 +238,10 @@
           self.$.rows.model = this;
           self.$.filters.model = { filters: self.buildFilters(this.rows) };
         });
+      },
+
+      renderAll: function (one, two, three) {
+        this.$.rows.model.rows = this.complaints;
       },
 
       applyFilters: function (e, detail) {
