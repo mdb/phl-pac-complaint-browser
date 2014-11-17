@@ -147,8 +147,9 @@
             <h3 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
             <core-collapse id="collapse-{{ trait }}">
               <core-selector on-core-select="{{ applyFilters }}" valueattr="label">
+                <span class="filter filter-0" trait="{{ trait }}" label="all">All</span>
                 <template repeat="{{ value, i in values }}">
-                  <span class="filter filter-{{ i }}" trait="{{ trait }}" label="{{ value }}">{{ value }}</span>
+                  <span class="filter filter-{{ i+1 }}" trait="{{ trait }}" label="{{ value }}">{{ value }}</span>
                 </template>
               </core-selector>
             </core>
@@ -259,6 +260,8 @@
             trait;
 
         for (trait in this.appliedFilters) {
+          if (self.appliedFilters[trait] === 'all') { continue; }
+
           filteredComplaints = filteredComplaints.filter(function (complaint) {
             return complaint[trait]['$t'] === self.appliedFilters[trait];
           });
