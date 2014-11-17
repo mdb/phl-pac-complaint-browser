@@ -234,7 +234,7 @@
         var self = this;
 
         self.$.sheet.addEventListener('google-sheet-data', function(e) {
-          self.activeFilters = {};
+          self.appliedFilters = {};
           self.complaints = this.rows;
           self.$.rows.model = this;
           self.$.filters.model = { filters: self.buildFilters(this.rows) };
@@ -247,30 +247,24 @@
       },
 
       applyFilters: function (evt, detail, elem) {
-        var filter = detail.item.getAttribute('label'),
-            property = this.propertyName(detail.item.getAttribute('trait')),
-            self = this;
+        var property = this.propertyName(detail.item.getAttribute('trait'));
 
-        this.activeFilters[property] = filter;
-        this.filteredComplaints = [];
-
-        for (var prop in this.activeFilters) {
-          console.log(prop, this.activeFilters[prop]);
-
-          this.filteredComplaints.push(this.complaints.filter(function (complaint) {
-            return complaint[prop]['$t'] === self.activeFilters[prop];
-          }));
-        }
-
-        this.filteredComplaints = this.flatten(this.filteredComplaints);
-
-        this.$.rows.model.rows = this.filteredComplaints;
+        this.appliedFilters[property] = detail.item.getAttribute('label');
+        this.filterComplaints();
       },
 
-      flatten: function (arr) {
-        var merged = [];
+      filterComplaints: function () {
+        var filteredComplaints = this.complaints,
+            self = this,
+            trait;
 
-        return merged.concat.apply(merged, arr);
+        for (trait in this.appliedFilters) {
+          filteredComplaints = filteredComplaints.filter(function (complaint) {
+            return complaint[trait]['$t'] === self.appliedFilters[trait];
+          });
+        }
+
+        this.$.rows.model.rows = filteredComplaints;
       },
 
       buildFilters: function (data) {
