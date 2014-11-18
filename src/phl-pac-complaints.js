@@ -16,12 +16,33 @@
       return {
         trait: property,
         capitalizedTrait: this.capitalize(property),
-        values: this.getUniqueValues(property, data)
+        values: this.getUniqueValues(property, data),
+        count: this.getCount(property, data)
       };
     },
 
     capitalize: function (str) {
       return str.charAt(0).toUpperCase() + str.slice(1)
+    },
+
+    getCount: function (property, data) {
+      var count = {},
+          propertyName = this.propertyName(property),
+          value;
+
+      data.forEach(function (item) {
+        value = item[propertyName]['$t'];
+
+        if (value === '') { return; }
+
+        if (count[value]) {
+          count[value]++;
+        } else {
+          count[value] = 1;
+        }
+      });
+
+      return count;
     },
 
     getUniqueValues: function (property, data) {
