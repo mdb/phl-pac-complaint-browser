@@ -1,7 +1,7 @@
 (function () {
   var helpers = {
     buildFilters: function (data) {
-      var filterables = ['race', 'sex', 'type', 'unit', 'action', 'status'],
+      var filterables = ['race', 'gender', 'type', 'unit', 'action', 'status'],
           filters = [],
           self = this;
 
@@ -65,7 +65,9 @@
     },
 
     propertyName: function (property) {
-      return 'gsx$' + property;
+      var prop = property === 'gender' ? 'sex' : property;
+
+      return 'gsx$' + prop;
     }
   };
 
