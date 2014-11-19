@@ -1,11 +1,12 @@
 (function () {
   var helpers = {
+    filterables: ['race', 'gender', 'type', 'unit', 'action', 'status'],
+
     buildFilters: function (data) {
-      var filterables = ['race', 'gender', 'type', 'unit', 'action', 'status'],
-          filters = [],
+      var filters = [],
           self = this;
 
-      filterables.forEach(function (filter) {
+      this.filterables.forEach(function (filter) {
         filters.push(self.buildFilterObj(filter, data));
       });
 
@@ -111,10 +112,27 @@
       this.$.rows.model.rows = filteredComplaints;
     },
 
-    toggleDropdown: function (evt, detail, sender) {
-      var trait = sender.getAttribute('trait');
+    togglePanel: function (evt, detail, sender) {
+      var trait = sender.getAttribute('trait'),
+          panel = this.shadowRoot.querySelector('#collapse-' + trait);
 
-      this.shadowRoot.querySelector('#collapse-' + trait).toggle();
+      panel.toggle();
+      panel.className = 'open';
+      this.closeItemsExcept(trait);
+    },
+
+    closeItemsExcept: function (trait) {
+      var items = helpers.filterables,
+          self = this;
+
+      items.forEach(function (item) {
+        var panel = self.shadowRoot.querySelector('#collapse-' + item);
+
+        if (item !== trait && panel.className === 'open') {
+          panel.toggle();
+          panel.className = '';
+        }
+      });
     },
 
     toggleOverlay: function () {

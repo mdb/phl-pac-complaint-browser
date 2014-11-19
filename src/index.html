@@ -22,7 +22,7 @@
           <span on-click="{{ renderAll }}" class="clear-all">clear</span>
 
           <template id="filters" repeat="{{ filters }}" bind>
-            <h3 on-click="{{ toggleDropdown }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
+            <h3 on-click="{{ togglePanel }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
             <core-collapse id="collapse-{{ trait }}">
               <core-selector on-core-select="{{ applyFilters }}" valueattr="label" selected="0">
                 <span class="filter filter-0" trait="{{ trait }}" label="all">All</span>
