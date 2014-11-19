@@ -143,7 +143,6 @@
 
     toggleOverlay: function () {
       this.$.overlay.toggle();
-      return false;
     }
   });
 })();
