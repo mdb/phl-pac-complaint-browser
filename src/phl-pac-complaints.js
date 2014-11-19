@@ -85,8 +85,14 @@
     },
 
     renderAll: function () {
+      var self = this;
+
       this.appliedFilters = {};
       this.$.rows.model.rows = this.complaints;
+
+      helpers.filterables.forEach(function (filter) {
+        self.shadowRoot.querySelector('#' + filter + '-selector').selectIndex(0);
+      });
     },
 
     applyFilters: function (evt, detail, elem) {

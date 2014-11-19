@@ -24,7 +24,7 @@
           <template id="filters" repeat="{{ filters }}" bind>
             <h3 on-click="{{ togglePanel }}" trait="{{ trait }}">{{ capitalizedTrait }}</h3>
             <core-collapse id="collapse-{{ trait }}">
-              <core-selector on-core-select="{{ applyFilters }}" valueattr="label" selected="0">
+              <core-selector id="{{ trait }}-selector" on-core-select="{{ applyFilters }}" valueattr="label" selected="0">
                 <span class="filter filter-0" trait="{{ trait }}" label="all">All</span>
                 <template repeat="{{ value, i in values }}">
                   <span class="filter filter-{{ i+1 }}" trait="{{ trait }}" label="{{ value }}">{{ value }} ({{ count[value] }})</span>
