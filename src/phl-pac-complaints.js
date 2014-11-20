@@ -96,10 +96,13 @@
     },
 
     applyFilters: function (evt, detail, elem) {
-      var property = helpers.propertyName(detail.item.getAttribute('trait'));
+      var trait = detail.item.getAttribute('trait'),
+          traitVal = detail.item.getAttribute('label'),
+          property = helpers.propertyName(trait);
 
-      this.appliedFilters[property] = detail.item.getAttribute('label');
+      this.appliedFilters[property] = traitVal;
       this.filterComplaints();
+      detail.item.parentNode.parentElement.previousElementSibling.querySelector('span').innerHTML = traitVal;
     },
 
     filterComplaints: function () {

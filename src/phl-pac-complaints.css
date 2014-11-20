@@ -26,6 +26,10 @@ h2 {
   border-bottom: 1px solid #ddd;
 }
 
+header {
+  position: relative;
+}
+
 h3 {
   cursor: pointer;
   border: 1px solid #ccc;
@@ -33,6 +37,12 @@ h3 {
   padding-left: 5px;
   margin-top: -1px;
   background: #eee;
+}
+
+header span {
+  position: absolute;
+  right: 5px;
+  top: 7px;
 }
 
 p {
