@@ -102,7 +102,7 @@
 
       this.appliedFilters[property] = traitVal;
       this.filterComplaints();
-      detail.item.parentNode.parentElement.previousElementSibling.querySelector('span').innerHTML = traitVal;
+      this.shadowRoot.querySelector('header[trait=' + trait + ']').querySelector('span').innerHTML = traitVal;
     },
 
     filterComplaints: function () {
