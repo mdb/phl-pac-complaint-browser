@@ -1,128 +1,136 @@
-<!doctype html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>Philadelphia Police Advisory Commission Complaints</title>
-    <script src="../bower_components/platform/platform.js"></script>
-    <link rel="import" href="../bower_components/google-sheets/google-sheets.html" />
-    <link rel="import" href="../bower_components/google-map/google-map.html" />
-    <link rel="import" href="../bower_components/core-selector/core-selector.html" />
-    <link rel="import" href="../bower_components/core-collapse/core-collapse.html" />
-    <link rel="import" href="../bower_components/core-overlay/core-overlay.html" />
-  </head>
-  <body unresolved>
-    <polymer-element name="phl-pac-complaints">
-      <template>
-      <link rel="stylesheet" href="phl-pac-complaints.css" />
-        <section class="controls">
-          <h1>Philadelphia Police Advisory Commission Complaints</h1>
-          <h2>2009 &ndash; 2012</h2>
+<script src="../bower_components/platform/platform.js"></script>
+<link rel="import" href="../bower_components/google-sheets/google-sheets.html"/>
+<link rel="import" href="../bower_components/google-map/google-map.html"/>
+<link rel="import" href="../bower_components/core-selector/core-selector.html"/>
+<link rel="import" href="../bower_components/core-collapse/core-collapse.html"/>
+<link rel="import" href="../bower_components/core-overlay/core-overlay.html"/>
 
-          <span class="filter-by">Filter by:</span>
-          <span on-click="{{ renderAll }}" class="clear-all">clear</span>
+<polymer-element name="phl-pac-complaints">
+  <template>
+    <link rel="stylesheet" href="phl-pac-complaints.css"/>
+    <section class="controls">
+      <h1>Philadelphia Police Advisory Commission Complaints</h1>
 
-          <template id="filters" repeat="{{ filters }}" bind>
-            <header on-click="{{ togglePanel }}" trait="{{ trait }}">
-              <h3>{{ capitalizedTrait }}</h3>
-              <span></span>
-            </header>
-            <core-collapse id="collapse-{{ trait }}">
-              <core-selector id="{{ trait }}-selector" on-core-select="{{ applyFilters }}" valueattr="label" selected="0">
-                <span class="filter filter-0" trait="{{ trait }}" label="all">All</span>
-                <template repeat="{{ value, i in values }}">
-                  <span class="filter filter-{{ i+1 }}" trait="{{ trait }}" label="{{ value }}">{{ value }} ({{ count[value] }})</span>
-                </template>
-              </core-selector>
-            </core>
-          </template>
+      <h2>2009 &ndash; 2012</h2>
+      <span class="filter-by">Filter by:</span>
+      <span on-click="{{ renderAll }}" class="clear-all">clear</span>
 
-          <ul class="fine-print">
-            <li class="about" on-click="{{ toggleOverlay }}">About</li>
-            <li><a href="http://www.mikeball.info">2014 MDB</a></li>
-          </ul>
+      <template repeat="{{ trait in filters.filters }}">
+        <header on-click="{{ togglePanel }}" trait="{{ trait.trait }}">
+          <h3>{{ trait.trait | toTitleCase }}</h3>
+          <span>{{applied[trait.filter] | toTitleCase}}</span>
+        </header>
+        <core-collapse id="collapse-{{ trait.trait }}">
+          <core-selector id="{{ trait.trait }}-selector" valueattr="label" selected="{{applied[trait.filter]}}">
+            <span class="filter filter-0" trait="{{ trait.trait }}" label="all">All</span>
+            <template repeat="{{ value in trait.values }}">
+              <span class="filter" trait="{{ trait.trait }}" label="{{ value }}">{{ value }} ({{ trait.count[value] }})</span>
+            </template>
+          </core-selector>
+        </core-collapse>
+      </template>
 
-          <core-overlay id="overlay" layered backdrop>
+      <ul class="fine-print">
+        <li class="about" on-click="{{ toggleOverlay }}">About</li>
+        <li><a href="http://www.mikeball.info">2014 MDB</a></li>
+      </ul>
+
+      <core-overlay id="overlay" layered backdrop>
+        <style>
+          #description {
+            background: #fff;
+            width: 500px;
+            padding: 20px;
+          }
+
+          #description p {
+            font-size: 16px;
+            line-height: 22px;
+            color: #555;
+          }
+
+          #description a {
+            color: #555;
+          }
+        </style>
+        <div id="description">
+          <h2>About</h2>
+
+          <p>This map plots 2009 &ndash; 2012 complaints filed with the Philadelphia Police Advisory Commission by
+            citizens against Philadelphia Police officers. Click a marker to view complaint details.</p>
+
+          <p>The data is published by <a
+              href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open
+            Data Philly</a> and has been imported to a public <a
+              href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE&usp=sharing">Google
+            Spreadsheet</a>. According to Open Data Philly, the data comes directly from the Police Advisory Commission
+            Complaint Database.</p>
+
+          <p>The data does not include additional complaints filed with Philadelphia Police Internal Affairs.</p>
+
+          <p>Please reference the application's <a
+              href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE#gid=0">Google
+            Spreadsheet</a>, <a href="http://github.com/mdb/phl-pac-complaint-browser">source code</a> and <a
+              href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open
+            Data Philly's PAC Complaints data</a> in accessing data integrity and accuracy. Defects can be logged on <a
+              href="https://github.com/mdb/phl-pac-complaint-browser/issues">Github</a>.</p>
+        </div>
+      </core-overlay>
+
+    </section>
+
+    <google-sheets id="sheet" key="0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE" published
+                   rows="{{rows}}"></google-sheets>
+
+    <template id="rows" bind>
+      <google-map latitude="39.99" longitude="-75.150" zoom="12" disableDefaultUI zoomable="true">
+
+        <template repeat="{{filteredData}}">
+          <google-map-marker latitude="{{gsx$lat.$t}}" longitude="{{gsx$long.$t}}">
             <style>
-              #description {
-                background: #fff;
-                width: 500px;
-                padding: 20px;
+              table {
+                border-collapse: collapse;
               }
 
-              #description p {
-                font-size: 16px;
-                line-height: 22px;
-                color: #555;
-              }
-
-              #description a {
-                color: #555;
+              td {
+                border: 1px solid #ccc;
+                padding: 3px;
               }
             </style>
-            <div id="description">
-              <h2>About</h2>
-              <p>This map plots 2009 &ndash; 2012 complaints filed with the Philadelphia Police Advisory Commission by citizens against Philadelphia Police officers. Click a marker to view complaint details.</p>
-              <p>The data is published by <a href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open Data Philly</a> and has been imported to a public <a href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE&usp=sharing">Google Spreadsheet</a>. According to Open Data Philly, the data comes directly from the Police Advisory Commission Complaint Database.</p>
-              <p>The data does not include additional complaints filed with Philadelphia Police Internal Affairs.</p>
-              <p>Please reference the application's <a href="https://docs.google.com/spreadsheet/ccc?key=0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE#gid=0">Google Spreadsheet</a>, <a href="http://github.com/mdb/phl-pac-complaint-browser">source code</a> and <a href="http://www.opendataphilly.org/opendata/resource/218/philadelphia-police-advisory-commission-complaints/">Open Data Philly's PAC Complaints data</a> in accessing data integrity and accuracy. Defects can be logged on <a href="https://github.com/mdb/phl-pac-complaint-browser/issues">Github</a>.</p>
-            </div>
-          </core-overlay>
-
-        </section>
-
-        <google-sheets id="sheet" key="0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE" published></google-sheets>
-
-        <template id="rows" bind>
-          <google-map latitude="39.99" longitude="-75.150" zoom="12" disableDefaultUI zoomable="true">
-
-          <template repeat="{{rows}}">
-            <google-map-marker latitude="{{gsx$lat.$t}}" longitude="{{gsx$long.$t}}">
-              <style>
-                table {
-                  border-collapse: collapse;
-                }
-
-                td {
-                  border: 1px solid #ccc;
-                  padding: 3px;
-                }
-              </style>
-              <table>
-                <tr>
-                  <td>Type</td>
-                  <td>{{gsx$type.$t}}</td>
-                </tr>
-                <tr>
-                  <td>Unit</td>
-                  <td>{{gsx$unit.$t}}</td>
-                </tr>
-                <tr>
-                  <td>Age</td>
-                  <td>{{gsx$age.$t}}</td>
-                </tr>
-                <tr>
-                  <td>Race</td>
-                  <td>{{gsx$race.$t}}</td>
-                </tr>
-                <tr>
-                  <td>Sex</td>
-                  <td>{{gsx$sex.$t}}</td>
-                </tr>
-                <tr>
-                  <td>Action</td>
-                  <td>{{gsx$action.$t}}</td>
-                </tr>
-                <tr>
-                  <td>Status</td>
-                  <td>{{gsx$status.$t}}</td>
-                </tr>
-              </table>
-            </google-map-marker>
-          </template>
-          </google-map>
+            <table>
+              <tr>
+                <td>Type</td>
+                <td>{{gsx$type.$t}}</td>
+              </tr>
+              <tr>
+                <td>Unit</td>
+                <td>{{gsx$unit.$t}}</td>
+              </tr>
+              <tr>
+                <td>Age</td>
+                <td>{{gsx$age.$t}}</td>
+              </tr>
+              <tr>
+                <td>Race</td>
+                <td>{{gsx$race.$t}}</td>
+              </tr>
+              <tr>
+                <td>Sex</td>
+                <td>{{gsx$sex.$t}}</td>
+              </tr>
+              <tr>
+                <td>Action</td>
+                <td>{{gsx$action.$t}}</td>
+              </tr>
+              <tr>
+                <td>Status</td>
+                <td>{{gsx$status.$t}}</td>
+              </tr>
+            </table>
+          </google-map-marker>
         </template>
-      </template>
-      <script src="phl-pac-complaints.js"></script>
-    <polymer-element>
-  </body>
-</html>
+      </google-map>
+    </template>
+  </template>
+  <script src="phl-pac-complaints.js"></script>
+</polymer-element>

@@ -152,3 +152,7 @@ button {
 button:hover {
   cursor: pointer;
 }
+
+*[on-click]{
+    cursor: pointer;
+}
