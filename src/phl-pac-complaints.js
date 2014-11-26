@@ -133,7 +133,14 @@
 
     togglePanel: function (evt, detail, sender) {
       var trait = sender.getAttribute('trait'),
-          panel = this.shadowRoot.querySelector('#collapse-' + trait);
+          panel = this.shadowRoot.querySelector('#collapse-' + trait),
+          heading = this.shadowRoot.querySelector('#heading-' + trait);
+
+      if (sender.getAttribute('class') === 'open') {
+        sender.removeAttribute('class');
+      } else {
+        sender.setAttribute('class', 'open');
+      }
 
       panel.toggle();
       this.closeItemsExcept(trait);
@@ -147,6 +154,7 @@
         var panel = self.shadowRoot.querySelector('#collapse-' + item);
 
         if (item !== trait && panel.className !== 'core-collapse-closed') {
+          panel.previousElementSibling.removeAttribute('class');
           panel.toggle();
         }
       });

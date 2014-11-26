@@ -17,7 +17,7 @@
 
       <template repeat="{{ trait in filters.filters }}">
         <header on-click="{{ togglePanel }}" trait="{{ trait.trait }}">
-          <h3>{{ trait.trait | toTitleCase }}</h3>
+          <h3 id="heading-{{ trait.trait }}">{{ trait.trait | toTitleCase }}</h3>
           <span>{{applied[trait.filter] | toTitleCase}}</span>
         </header>
 

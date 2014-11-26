@@ -39,10 +39,51 @@ h3 {
   background: #f5f5f5;
 }
 
+h3:hover {
+  background: #555;
+  color: #fff;
+}
+
+h3:before {
+  color: #555;
+  content: '+';
+  font-size: 11px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  width: 12px;
+  height: 12px;
+  border-radius: 12px;
+  text-align: center;
+  margin-right: 5px;
+  line-height: 11px;
+}
+
+h3:hover:before {
+  background: #fff;
+  color: #555;
+  border-color: #fff;
+}
+
+header.open h3 {
+  background: #555;
+  color: #fff;
+}
+
+header.open h3:before {
+  background: #fff;
+  color: #555;
+  content: '-';
+  border-color: #fff;
+}
+
 header span {
   position: absolute;
   right: 5px;
   top: 7px;
+}
+
+header.open span, header:hover span {
+  color: #fff;
 }
 
 p {
@@ -78,6 +119,10 @@ span.filter {
   border-bottom: none;
   line-height: 24px;
   padding-left: 5px;
+}
+
+span.filter:hover {
+  background: #f5f5f5;
 }
 
 span.filter-0 {
