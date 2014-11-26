@@ -40,7 +40,7 @@ h3 {
 }
 
 h3:hover {
-  background: #555;
+  background: #777;
   color: #fff;
 }
 
@@ -175,6 +175,7 @@ core-collapse {
   padding: 10px;
   background: #fff;
   position: absolute;
+  border: 7px solid #bbb;
   top: 10px;
   left: 10px;
   z-index: 10;
