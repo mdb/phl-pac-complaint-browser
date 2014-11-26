@@ -136,7 +136,6 @@
           panel = this.shadowRoot.querySelector('#collapse-' + trait);
 
       panel.toggle();
-      panel.className = 'open';
       this.closeItemsExcept(trait);
     },
 
@@ -147,9 +146,8 @@
       items.forEach(function (item) {
         var panel = self.shadowRoot.querySelector('#collapse-' + item);
 
-        if (item !== trait && panel.className === 'open') {
+        if (item !== trait && panel.className !== 'core-collapse-closed') {
           panel.toggle();
-          panel.className = '';
         }
       });
     },
