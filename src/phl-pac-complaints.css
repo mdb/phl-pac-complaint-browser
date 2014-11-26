@@ -12,9 +12,16 @@
 }
 
 h1 {
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: 5px;
   line-height: 18px;
+}
+
+section > h1 {
+  background: #000;
+  color: #fff;
+  margin: 0 -10px 10px -10px;
+  padding: 10px;
 }
 
 h2 {
@@ -40,7 +47,7 @@ h3 {
 }
 
 h3:hover {
-  background: #777;
+  background: #000;
   color: #fff;
 }
 
@@ -65,7 +72,7 @@ h3:hover:before {
 }
 
 header.open h3 {
-  background: #555;
+  background: #000;
   color: #fff;
 }
 
@@ -173,9 +180,10 @@ core-collapse {
 .controls {
   width: 250px;
   padding: 10px;
+  padding-top: 0px;
   background: #fff;
   position: absolute;
-  border: 7px solid #bbb;
+  border: 3px solid #000;
   top: 10px;
   left: 10px;
   z-index: 10;
