@@ -106,6 +106,7 @@ span.filter-by {
 
 span.clear-all {
   float: right;
+  text-decoration: underline;
   color: #777;
   margin-top: -20px;
 }
