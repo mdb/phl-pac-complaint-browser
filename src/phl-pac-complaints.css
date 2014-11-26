@@ -106,12 +106,8 @@ span.filter-by {
 
 span.clear-all {
   float: right;
+  color: #777;
   margin-top: -20px;
-}
-
-span.clear-all:before {
-  content: "x";
-  margin-right: 3px;
 }
 
 button.about {
