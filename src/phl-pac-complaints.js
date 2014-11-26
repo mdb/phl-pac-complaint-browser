@@ -113,23 +113,27 @@
 
     appliedChanged: function () {
       var trait,
-        filter,
-        filteredData = this.rows;
+          filter,
+          filteredData = this.rows;
+
       for (trait in this.applied) {
         if (this.applied[trait] === 'all') {
           continue;
         }
+
         filter = this.applied[trait];
+
         filteredData = filteredData.filter(function (complaint) {
           return complaint[trait]['$t'] === filter;
         });
       }
+
       this.filteredData = filteredData;
     },
 
     togglePanel: function (evt, detail, sender) {
       var trait = sender.getAttribute('trait'),
-        panel = this.shadowRoot.querySelector('#collapse-' + trait);
+          panel = this.shadowRoot.querySelector('#collapse-' + trait);
 
       panel.toggle();
       panel.className = 'open';
