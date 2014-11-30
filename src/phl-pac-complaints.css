@@ -204,6 +204,6 @@ button:hover {
   cursor: pointer;
 }
 
-*[on-click]{
-    cursor: pointer;
+*[on-click] {
+  cursor: pointer;
 }
