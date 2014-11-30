@@ -96,8 +96,14 @@
     },
 
     rowsChanged: function () {
+      if (!this.loaded) {
+        this.shadowRoot.querySelector('paper-spinner').removeAttribute('active');
+        this.shadowRoot.querySelector('paper-spinner.map').removeAttribute('active');
+      }
+
       this.filters = { filters: helpers.buildFilters(this.rows) };
       this.filteredData = this.rows;
+      this.loaded = true;
     },
 
     renderAll: function () {

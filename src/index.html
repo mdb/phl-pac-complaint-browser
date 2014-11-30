@@ -4,6 +4,7 @@
 <link rel="import" href="../bower_components/core-selector/core-selector.html"/>
 <link rel="import" href="../bower_components/core-collapse/core-collapse.html"/>
 <link rel="import" href="../bower_components/core-overlay/core-overlay.html"/>
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html"/>
 
 <polymer-element name="phl-pac-complaints">
   <template>
@@ -12,6 +13,8 @@
       <h1>2009 &ndash; 2012 Philadelphia Police Advisory Commission Complaints</h1>
       <span class="filter-by">Filter by:</span>
       <span on-click="{{ renderAll }}" class="clear-all">clear all</span>
+
+      <paper-spinner active></paper-spinner>
 
       <template repeat="{{ trait in filters.filters }}">
         <header on-click="{{ togglePanel }}" trait="{{ trait.trait }}">
@@ -62,6 +65,8 @@
       </core-overlay>
 
     </section>
+
+    <paper-spinner class="map" active></paper-spinner>
 
     <google-sheets id="sheet" key="0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE" published rows="{{rows}}"></google-sheets>
 

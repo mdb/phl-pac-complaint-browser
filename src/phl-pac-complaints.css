@@ -19,9 +19,13 @@ h1 {
 
 section > h1 {
   background: #000;
+  font-family: times, georgia, serif;
+  font-weight: normal;
   color: #fff;
   margin: 0 -10px 10px -10px;
   padding: 10px;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 h2 {
@@ -98,7 +102,8 @@ p {
 }
 
 ul.fine-print {
-  margin-top: 5px;
+  position: absolute;
+  bottom: 8px;
 }
 
 ul.fine-print li {
@@ -178,6 +183,7 @@ core-collapse {
 }
 
 .controls {
+  min-height: 278px;
   width: 250px;
   padding: 10px;
   padding-top: 0px;
@@ -206,4 +212,36 @@ button:hover {
 
 *[on-click] {
   cursor: pointer;
+}
+
+paper-spinner {
+  position: absolute;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+}
+
+paper-spinner.map {
+  width: 75px;
+  height: 75px;
+}
+
+.controls paper-spinner[active]:before {
+  content: '.';
+  text-indent: -5000px;
+  display: block;
+  width: 250px;
+  height: 160px;
+  margin-left: -125px;
+  margin-top: -175%;
+  position: absolute;
+}
+
+paper-spinner::shadow .circle {
+  border-color: #000;
+  border-width: 7px;
+}
+
+.controls paper-spinner::shadow .circle {
+  border-width: 4px;
 }
