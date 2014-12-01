@@ -95,12 +95,10 @@
       'applied.gsx$unit': 'appliedChanged'
     },
 
-    rowsChanged: function () {
-      if (!this.loaded) {
-        this.shadowRoot.querySelector('paper-spinner').removeAttribute('active');
-        this.shadowRoot.querySelector('paper-spinner.map').removeAttribute('active');
-      }
+    loading: true,
 
+    rowsChanged: function () {
+      this.loading = false;
       this.filters = { filters: helpers.buildFilters(this.rows) };
       this.filteredData = this.rows;
       this.loaded = true;

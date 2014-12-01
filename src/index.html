@@ -14,7 +14,7 @@
       <span class="filter-by">Filter by:</span>
       <span on-click="{{ renderAll }}" class="clear-all">clear all</span>
 
-      <paper-spinner active></paper-spinner>
+      <paper-spinner active?="{{ loading }}"></paper-spinner>
 
       <template repeat="{{ trait in filters.filters }}">
         <header on-click="{{ togglePanel }}" trait="{{ trait.trait }}">
@@ -66,7 +66,7 @@
 
     </section>
 
-    <paper-spinner class="map" active></paper-spinner>
+    <paper-spinner class="map" active?="{{ loading }}"></paper-spinner>
 
     <google-sheets id="sheet" key="0Aii0ITjxvJ6fdFR0WTZmMGNkaWRrd01FNHNvOXFZeEE" published rows="{{rows}}"></google-sheets>
 
