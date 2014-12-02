@@ -4,7 +4,9 @@
   "dependencies": {
   },
   "devDependencies": {
+    "fs-extra": "^0.12.0",
     "gulp": "",
-    "gulp-connect": ""
+    "gulp-connect": "",
+    "gulp-s3": "^0.3.0"
   }
 }
