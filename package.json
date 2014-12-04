@@ -8,6 +8,7 @@
     "gulp": "",
     "gulp-connect": "",
     "gulp-s3": "^0.3.0",
-    "gulp-vulcanize": "5.0.0"
+    "gulp-vulcanize": "5.0.0",
+    "gulp-rename": "1.2.0"
   }
 }
