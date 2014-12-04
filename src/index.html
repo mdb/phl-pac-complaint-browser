@@ -9,7 +9,7 @@
 <polymer-element name="phl-pac-complaints">
   <template>
     <link rel="stylesheet" href="phl-pac-complaints.css"/>
-    <section class="controls">
+    <section class="controls" active?="{{ loading }}">
       <h1>2009 - 2012 Philadelphia Police Advisory Commission Complaints</h1>
       <span class="filter-by">Filter by:</span>
       <span on-click="{{ renderAll }}" class="clear-all">clear all</span>

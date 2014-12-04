@@ -102,6 +102,10 @@ p {
 }
 
 ul.fine-print {
+  margin-top: 10px;
+}
+
+.controls[active] ul.fine-print {
   position: absolute;
   bottom: 8px;
 }
