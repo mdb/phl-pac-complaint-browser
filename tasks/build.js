@@ -6,7 +6,7 @@ module.exports = function (gulp) {
   var buildDir = 'build';
 
   gulp.task(buildDir, function () {
-    return gulp.src('src/demo.html')
+    return gulp.src('demo.html')
       .pipe(rename('index.html'))
       .pipe(vulcanize({
         dest: buildDir,
